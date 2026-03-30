@@ -1,0 +1,34 @@
+argo-cd:
+  crds:
+    install: true
+
+  global:
+    domain: argo-cd.localhost
+
+    logging:
+      format: json
+      level: debug
+
+    networkPolicy:
+      create: true
+
+  server:
+    ingress:
+      enabled: false
+
+  configs:
+    cm:
+      create: true
+      users.anonymous.enabled: "true"
+
+    params:
+      create: true
+      server.insecure: true
+
+    rbac:
+      create: true
+      policy.default: role:admin
+
+  # Disable Authentication
+  dex:
+    enabled: false

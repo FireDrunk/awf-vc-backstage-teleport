@@ -1,0 +1,69 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: addons
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: addons
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  description: Addons
+  destinations:
+    - name: '*'
+      namespace: 'addon-*'
+      server: '*'
+  sourceNamespaces:
+    - addons
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  sourceRepos:
+    - '*'
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: addons
+spec:
+  generators:
+    - list:
+        elements:
+          - application: backstage
+#          - application: teleport
+#          - application: argo-events
+#          - application: argo-workflow
+
+  template:
+    metadata:
+      name: 'addons'
+      namespace: "addons"
+    spec:
+      project: addons
+      syncPolicy:
+        automated:
+          allowEmpty: true
+          selfHeal: true
+        syncOptions:
+          - ServerSideApply=true
+      source:
+        path: 'addons/{{ .application }}'
+
+        repoURL: https://github.com/firedrunk/awf-vc-backstage-teleport
+        targetRevision: 'HEAD'
+
+        helm:
+          releaseName: '{{ .application }}'
+          valueFiles:
+            - 'values.yaml'
+
+      destination:
+        name: 'local-cluster'
+        namespace: 'dhl-poe-{{ .application }}'
