@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: addons
+
+spec:
+  goTemplate: true
+  generators:
+    - list:
+        elements:
+          - addon: argocd
+            namespace: argocd
+          - addon: argo-events
+            namespace: addon-argo-events
+          - addon: argo-workflow
+            namespace: addon-argo-workflow
+          - addon: backstage
+            namespace: addon-backstage
+          - addon: teleport
+            namespace: addon-teleport
+
+  template:
+    metadata:
+      name: '{{ "{{" }} .addon {{ "}}" }}'
+      namespace: argocd
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/firedrunk/awf-vc-backstage-teleport.git
+        targetRevision: HEAD
+        path: 'addons/{{ "{{" }} .addon {{ "}}" }}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ "{{" }} .namespace {{ "}}" }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true

@@ -6,7 +6,9 @@ metadata:
   namespace: argocd
 spec:
   parentRefs:
-    - name: cilium
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: cilium
       namespace: kube-system
 
   hostnames:
@@ -19,4 +21,6 @@ spec:
             value: /
       backendRefs:
         - name: argocd-server
+          kind: Service
+          group: ''
           port: 80
