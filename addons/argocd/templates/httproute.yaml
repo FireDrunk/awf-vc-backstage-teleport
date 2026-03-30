@@ -24,3 +24,4 @@ spec:
           kind: Service
           group: ''
           port: 80
+          weight: 1
