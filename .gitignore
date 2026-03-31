@@ -4,3 +4,4 @@ addons/*/charts
 # Ignore Generated SSH Keys
 keys/deploy
 keys/deploy.pub
+keys/repo-secret.yaml
