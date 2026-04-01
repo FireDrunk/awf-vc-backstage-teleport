@@ -1,0 +1,14 @@
+backstage:
+  backstage:
+    image:
+      registry: "registry.localhost:5000"
+      repository: "backstage/backstage"
+      tag: "latest"
+
+    ingress:
+      enabled: true
+      host: backstage.localhost
+
+  postgresql:
+    auth:
+      existingSecret: "secret-backstage"

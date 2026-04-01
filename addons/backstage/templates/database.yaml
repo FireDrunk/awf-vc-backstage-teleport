@@ -1,0 +1,33 @@
+{{/*---*/}}
+{{/*apiVersion: postgresql.cnpg.io/v1*/}}
+{{/*kind: Cluster*/}}
+{{/*metadata:*/}}
+{{/*  name: backstage*/}}
+
+{{/*spec:*/}}
+{{/*  imageName: ghcr.io/cloudnative-pg/postgresql:18*/}}
+{{/*  description: "Backstage Database"*/}}
+
+{{/*  instances: 1*/}}
+
+{{/*  bootstrap:*/}}
+{{/*    initdb:*/}}
+{{/*      database: backstage*/}}
+{{/*      owner: backstage*/}}
+
+{{/*  storage:*/}}
+{{/*    storageClass: default*/}}
+{{/*    size: "10Gi"*/}}
+
+{{/*  managed:*/}}
+{{/*    roles:*/}}
+{{/*      - name: "backstage"*/}}
+{{/*        login: true*/}}
+{{/*        ensure: present*/}}
+{{/*        inherit: true*/}}
+{{/*        createdb: true*/}}
+{{/*        createrole: true*/}}
+{{/*        connectionLimit: -1*/}}
+
+{{/*        passwordSecret:*/}}
+{{/*          name: "secret-backstage"*/}}
