@@ -1,0 +1,3 @@
+# Globals
+cloudnative-pg:
+  replicaCount: 2
