@@ -16,6 +16,8 @@ spec:
             namespace: addon-argo-workflow
           - addon: backstage
             namespace: addon-backstage
+          - addon: cloudnative-pg
+            namespace: cloudnative-pg
           - addon: teleport
             namespace: addon-teleport
 
